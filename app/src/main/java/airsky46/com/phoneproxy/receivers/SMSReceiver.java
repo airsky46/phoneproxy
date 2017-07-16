@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.SmsMessage;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -37,9 +38,8 @@ public class SMSReceiver extends ContentObserver {
      */
     @Override
     public void onChange(boolean selfChange) {
-        // TODO Auto-generated method stub
         super.onChange(selfChange);
-        System.out.println();
+        Log.d(this.getClass().getName(), "get new sms message");
         mHandler.obtainMessage(UIMessage.MSG_INBOX.getMessageType(), "SMS Received").sendToTarget();
     }
 

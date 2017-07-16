@@ -31,6 +31,9 @@ public class PhoneReceiver extends BroadcastReceiver {
                     .getStringExtra(Intent.EXTRA_PHONE_NUMBER);
             Log.d("", "call OUT:" + phoneNumber);
         } else {
+            if(PhoneManager.getInstance() == null){
+                new PhoneManager(context);
+            }
             //查了下android文档，貌似没有专门用于接收来电的action,所以，非去电即来电.
             //如果我们想要监听电话的拨打状况，需要这么几步 :
             if (initcount == 0) {
@@ -58,7 +61,11 @@ public class PhoneReceiver extends BroadcastReceiver {
                 case TelephonyManager.CALL_STATE_RINGING:
                     Log.d("call statue " + TelephonyManager.CALL_STATE_RINGING, "phoneNr: " + incomingNumber);
                     //输出来电号码
-                    MainActivity.instance.mHandler.obtainMessage(UIMessage.PHONE_IN.getMessageType(), "Phone call Received").sendToTarget();
+                    Log.d(this.getClass().getName(), "get new phone call");
+                    PhoneManager.getInstance().addPhoneProxyNum(1);
+                    if (MainActivity.instance != null && MainActivity.instance.mHandler != null) {
+                        MainActivity.instance.mHandler.obtainMessage(UIMessage.PHONE_IN.getMessageType(), "Phone call Received").sendToTarget();
+                    }
                     break;
             }
         }

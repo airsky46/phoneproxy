@@ -31,11 +31,9 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (UIMessage.valueOf(msg.what)) {
                 case MSG_INBOX:
-                    Log.d(this.getClass().getName(), "get new sms message");
                     updateSMSInfo();
                     break;
                 case PHONE_IN:
-                    Log.d(this.getClass().getName(), "get new phone call");
                     updatePhoneInfo();
                     break;
             }
@@ -109,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updatePhoneInfo() {
-        phoneManager.addPhoneProxyNum(1);
         EditText phonenumtext = (EditText) findViewById(R.id.phoneproxyshow);
         phonenumtext.setText(String.valueOf(phoneManager.getPhoneProxyNum()));
     }
