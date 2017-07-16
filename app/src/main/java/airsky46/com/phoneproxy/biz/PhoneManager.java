@@ -15,8 +15,12 @@ import java.util.List;
  */
 
 public class PhoneManager {
+    private static PhoneManager instance;
+    public static PhoneManager getInstance(){
+        return instance;
+    }
     private Uri smsUri = Uri.parse("content://sms/inbox");
-    private Context context
+    private Context context;
     private final String phoneProxy = "phoneProxyXML";
     private SharedPreferences sharedPreferences;
 
@@ -28,6 +32,7 @@ public class PhoneManager {
     public PhoneManager(Context context) {
         this.context = context;
         sharedPreferences = this.context.getSharedPreferences(phoneProxy, Context.MODE_PRIVATE);
+        instance=this;
     }
 
     private long getLastSmsDate() {
@@ -39,7 +44,7 @@ public class PhoneManager {
     }
 
     public void addPhoneProxyNum(long num2add) {
-        sharedPreferences.edit().putLong(phoneProxy, getPhoneProxyNum() + num2add).commit();
+        sharedPreferences.edit().putLong(phoneProxyNum, getPhoneProxyNum() + num2add).commit();
     }
 
 

@@ -24,9 +24,10 @@ import airsky46.com.phoneproxy.biz.constanse.UIMessage;
 import airsky46.com.phoneproxy.receivers.SMSReceiver;
 
 public class MainActivity extends AppCompatActivity {
+    public static MainActivity instance;
     private SMSReceiver smsReceiver;
     private PhoneManager phoneManager;
-    private Handler mHandler = new Handler() {
+    public  Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (UIMessage.valueOf(msg.what)) {
                 case MSG_INBOX:
@@ -34,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
                     updateSMSInfo();
                     break;
                 case PHONE_IN:
+                    Log.d(this.getClass().getName(), "get new phone call");
+                    updatePhoneInfo();
+                    break;
             }
         }
     };
@@ -59,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 Uri.parse("content://sms/"), true, smsReceiver);// 注册监听短信数据库的变化
         ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.READ_PHONE_STATE}, 1);
 
-
+        instance = MainActivity.this;
     }
 
     @Override
@@ -103,4 +107,11 @@ public class MainActivity extends AppCompatActivity {
             Log.d(this.getClass().getName(), smsdo.getAdress() + ":" + smsdo.getBody());
         }
     }
+
+    private void updatePhoneInfo() {
+        phoneManager.addPhoneProxyNum(1);
+        EditText phonenumtext = (EditText) findViewById(R.id.phoneproxyshow);
+        phonenumtext.setText(String.valueOf(phoneManager.getPhoneProxyNum()));
+    }
+
 }
