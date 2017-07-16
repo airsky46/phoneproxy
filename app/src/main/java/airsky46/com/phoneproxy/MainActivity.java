@@ -21,11 +21,11 @@ import java.util.List;
 import airsky46.com.phoneproxy.biz.SMSDO;
 import airsky46.com.phoneproxy.biz.PhoneManager;
 import airsky46.com.phoneproxy.biz.constanse.UIMessage;
-import airsky46.com.phoneproxy.receivers.SMSReceiver;
+import airsky46.com.phoneproxy.receivers.SMSObserver;
 
 public class MainActivity extends AppCompatActivity {
     public static MainActivity instance;
-    private SMSReceiver smsReceiver;
+    private SMSObserver smsObserver;
     private PhoneManager phoneManager;
     public  Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -55,11 +55,11 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        smsReceiver = new SMSReceiver(MainActivity.this, mHandler);
+        smsObserver = new SMSObserver(MainActivity.this, mHandler);
         phoneManager = new PhoneManager(MainActivity.this);
-        getContentResolver().registerContentObserver(
-                Uri.parse("content://sms/"), true, smsReceiver);// 注册监听短信数据库的变化
-        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.READ_PHONE_STATE}, 1);
+//        getContentResolver().registerContentObserver(
+//                Uri.parse("content://sms/"), true, smsObserver);// 注册监听短信数据库的变化
+        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.READ_PHONE_STATE,Manifest.permission.RECEIVE_SMS}, 1);
 
         instance = MainActivity.this;
     }
