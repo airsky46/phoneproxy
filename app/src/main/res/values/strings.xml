@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">通讯代理</string>
+    <string name="action_settings">设置</string>
+    <string name="action_about">关于</string>
+    <string name="text_smsproxynum">短信转发数量</string>
+    <string name="text_phoneproxynum">电话转发数量</string>
+</resources>
